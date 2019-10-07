@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react'
+import { Button , Icon } from 'semantic-ui-react'
 import './App.css';
+import LogIn from './LogIn'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Profil from './Profil'
+
+// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+class App extends Component {
+
+  constructor(props) {
+    super(props)
+    this.handlebackground = this.handlebackground.bind(this);
+    
+    this.state = {
+      background: true,
+      
+    };
+  }
+
+  handlebackground()
+  {    
+    this.setState({
+      background:!this.state.background 
+    });
+    
+    
+  }
+  
+  
+  render(){
+    const toggleBack = this.state.background ? "Body_1" : "Body_2";
+    let button = <Button id="change" icon='world' onClick={this.handlebackground}/>;
+
+    return (
+      <div id={toggleBack}>    
+        {button}  
+        <LogIn/> 
+        
+      </div>
+    );
+  }
+  
 }
 
 export default App;
