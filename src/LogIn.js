@@ -1,11 +1,12 @@
 /*
 recupere les donnée donnée par user , le mettre dans une variable, envoie une requet http avec dans le body @ et mdp
 afficher à partir de l'objet user et non à partir des variables des class
-y
+
 */ 
 import React, { Component  } from 'react'
 import { Button , Icon , Form , Divider } from 'semantic-ui-react'
 import './App.css';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
 
@@ -14,12 +15,18 @@ class LogIn extends Component {
     super(props)
     this.handleNew = this.handleNew.bind(this);
     this.handleAlready = this.handleAlready.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
     this.state = {
       isNew: true,
       //
-      userName:'',
-      mdp:'',
-      mail:''
+      user:'',
+      email:'',
+      psw: '',
+
+      emaildefault:'user1@user.fr',
+      pswdefault:'1234',
     };
   }
 
@@ -43,6 +50,30 @@ class LogIn extends Component {
     
   }
   
+  handleChange(event) {
+    this.setState(
+      { [event.target.name] : event.target.value}
+      );
+  }
+
+  handleSubmit(event) {
+    if(this.state.isNew)
+    {
+      if(this.state.email === this.state.emaildefault)
+      {
+        alert('bon email');
+        
+        if(this.state.psw === this.state.pswdefault)
+        {
+          alert('bon psw');
+        }else alert('mauvais psw');
+      }else alert('mauvais email');
+      
+    }
+      
+    event.preventDefault();
+  }
+
   render(){
     const isNew = this.state.isNew;
     let button;
@@ -57,10 +88,9 @@ class LogIn extends Component {
     return (      
       <div className="CenterBox">
                 
-        
-         <StartScreen isNew={isNew}></StartScreen>
+         <StartScreen isNew={isNew} handleChange={this.handleChange} handleSubmit={this.handleSubmit}></StartScreen>
          <Divider/>
-         <Startword isNew={isNew}></Startword>
+         <Startword isNew={isNew} handleChange={this.handleChange} handleSubmit={this.handleSubmit}></Startword>
         {button}
         
       </div>
@@ -75,19 +105,25 @@ function ShowLogIn(props)
     <div id="box_log">
       <h2>Welcome Player!</h2>
       <div className="form_log">
-        <Form>
+        <Form onSubmit={props.handleSubmit}>
           <Form.Input type="text"     
             size="20" 
             placeholder="Enter Email" 
             name="email"
-            icon={<Icon name='at' circular inverted link></Icon>} 
+            icon={<Icon name='at' circular inverted link></Icon>}
+
+            onChange={props.handleChange} 
+
             required>
           </Form.Input>
           <Form.Input type="password" 
             size="20" 
             placeholder="Enter Password" 
             name="psw"
-            icon={<Icon name='key' circular inverted link></Icon>} 
+            icon={<Icon name='key' circular inverted link></Icon>}
+ 
+            onChange={props.handleChange} 
+
             required>
           </Form.Input>
           <Button type='submit' color='red' icon labelPosition='right'>
@@ -132,12 +168,14 @@ function ShowSignIn(props)
     <div id="box_sign">
       <h2>Welcome New Player!</h2>
       <div className="form_log">
-        <Form action="GET">           
+        <Form onSubmit={props.handleSubmit}>           
           <Form.Input type="text"   
             size="20" 
             placeholder="Enter Username" 
             name="user"
             icon={<Icon name='user' circular inverted link></Icon>} 
+
+            onChange={props.handleChange} 
             required>
           </Form.Input>           
                 
@@ -146,6 +184,8 @@ function ShowSignIn(props)
             placeholder="Enter Password" 
             name="psw"
             icon={<Icon name='key' circular inverted link></Icon>} 
+
+            onChange={props.handleChange} 
             required>
           </Form.Input>
 
@@ -154,6 +194,8 @@ function ShowSignIn(props)
             placeholder="Enter Email" 
             name="email"
             icon={<Icon name='at' circular inverted link></Icon>} 
+
+            onChange={props.handleChange} 
             required>
           </Form.Input>
 
@@ -171,9 +213,9 @@ function ShowSignIn(props)
 function StartScreen(props)
 {
   if(!props.isNew){
-    return <ShowSignIn/>;
+    return <ShowSignIn handleChange={props.handleChange} handleSubmit={props.handleSubmit}/>;
   }
-  return <ShowLogIn/>;
+  return <ShowLogIn handleChange={props.handleChange} handleSubmit={props.handleSubmit}/>;
 }
 
 function Startword(props)

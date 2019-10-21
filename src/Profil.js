@@ -1,47 +1,54 @@
 import React, { Component } from 'react'
-import { Button , Icon , Statistic , Image , Grid , Segment , Header , Item , List , Progress , Card , Menu} from 'semantic-ui-react'
+import { Button , Icon , Statistic , Image , Grid , Segment , Header  , List , Progress , Card , Menu , Modal} from 'semantic-ui-react'
 import { Sparklines , SparklinesBars} from 'react-sparklines';
 import Chart from "react-apexcharts";
 import './App.css';
-/*
-*Type de jeu
-*On pourra faire un graphique de jeux en fonction des types
-widget profil
-widget graphic type de jeu
-widget liste d'amis
-jeu: Image, nom, heure de jeux, type
-*/
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+
 class Profil extends Component {
   constructor(props){
     super(props);
     this.state ={
       showForm : false,
-      nameUser : 'User',
+      /* nameUser : 'User',
       pictureUser: 'https://image.flaticon.com/icons/svg/235/235438.svg',
       numberGame: 10,
       level : 20,
       xp:50,
       hourAll: 3000,
-      
       games : [
         {id: 1, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_game:'Game1', hour_game:'1000' },
         {id: 2, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_game:'Game2', hour_game:'1000'},
         {id: 3, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_game:'Game3', hour_game:'1000'},
-        // {id: 4, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_game:'Game3', hour_game:'1000'},
-        // {id: 5, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_game:'Game3', hour_game:'1000'},
-        // {id: 6, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_game:'Game3', hour_game:'1000'},
-        // {id: 7, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_game:'Game3', hour_game:'1000'}
-
+        {id: 4, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_game:'Game4', hour_game:'1000'},
+        {id: 5, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_game:'Game5', hour_game:'1000'},
+        {id: 6, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_game:'Game6', hour_game:'1000'},
+        {id: 7, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_game:'Game7', hour_game:'1000'}
       ],
-     
-
       friends : [
         {id: 1, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerA'},
         {id: 2, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerB'},
         {id: 3, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerC'},
-        {id: 4, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerD'}
-      ],
-
+        {id: 4, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerD'},
+        {id: 5, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerE'},
+        {id: 6, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerF'},
+        {id: 7, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerG'},
+        {id: 8, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerH'},
+        {id: 9, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerI'},
+        {id: 10, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerJ'},
+        {id: 11, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerK'},
+        {id: 12, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerL'},
+        {id: 13, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerM'},
+      ], */
+      nameUser : props.nameUser,
+      pictureUser: props.pictureUser,
+      numberGame: props.numberGame,
+      level : props.level,
+      xp : props.xp,
+      hourAll: props.hourAll,
+      games : props.games,
+      friends : props.friends,
       //Diagramme
       options: {
         colors: ['#ced6fd', '#cefdde', '#fdcfce', '#fdceeb'],
@@ -54,7 +61,7 @@ class Profil extends Component {
       
 
       //menu default onglet
-      activeItem: 'game',
+      activeItem: 'friends',
 
     };
   }
@@ -62,7 +69,7 @@ class Profil extends Component {
 
   render(){
     const  activeItem  = this.state.activeItem;
-
+    const nb_game = this.state.games.length;
     return(
       <div id='profil'>
         <Menu pointing secondary>
@@ -101,7 +108,7 @@ class Profil extends Component {
             <AllStat pictureUser={this.state.pictureUser} nameUser={this.state.nameUser} level={this.state.level} xp={this.state.xp}></AllStat> 
             <br></br>
             <br></br>
-            <StatUser numberGame={this.state.numberGame} hourAll={this.state.hourAll} ></StatUser>
+            <StatUser numberGame={nb_game} hourAll={this.state.hourAll} ></StatUser>
           </div>
           ) : (
             activeItem ==='game' ?
@@ -203,11 +210,9 @@ function Graphic_Game(props)
   );
 }
 
-//Game
-//Faire un voir + s'il y a + de 4 jeux
+
 function GameLister(props)
 {
-  
   const game_content = props.games.map((game) =>
   <List.Item>    
       <Image avatar size='small' src={game.url_image} />
@@ -222,6 +227,54 @@ function GameLister(props)
   </List.Item>
   );
 
+  if(props.games.length > 4)
+  {
+    const mini_content = props.games.slice(0,4);
+    const mini_game_content = mini_content.map((game) =>
+      <List.Item>    
+          <Image avatar size='small' src={game.url_image} />
+          <List.Content verticalAlign='middle'>
+            <List.Header>
+              {game.name_game}
+            </List.Header>
+            <List.Description>
+            {game.hour_game}h
+            </List.Description>
+          </List.Content>
+      </List.Item>
+    );
+
+    return(
+      <Segment >
+        <Header as='h2'>
+          My Games 
+        </Header>
+        <List divided relaxed='very' animated verticalAlign='middle' size='large'>     
+          {mini_game_content}
+        </List>
+
+        <Modal 
+          trigger={<Button size='large' fluid >See All</Button>}
+          size='large'
+          dimmer='blurring'
+          >
+        <Modal.Content>
+          <Header as='h2'>
+            My Games 
+          </Header>
+          <List divided relaxed='very' animated verticalAlign='middle' size='large'>     
+            {game_content}
+          </List>
+        </Modal.Content>
+        </Modal>
+        
+      </Segment>
+    );
+    
+  }
+  
+  
+
   return(
     <Segment >
       <Header as='h2'>
@@ -235,30 +288,81 @@ function GameLister(props)
 }
 
 
-//Friends
-//Faire un voir + s'il y a + de 4 amis
+
 function FriendLister(props)
 {
+  
+
   const friend_content = props.friends.map((friend) =>
-  <List.Item>
+  <Grid.Column width={4} >
     <Card>
       <Image  src={friend.url_image} />
       <Card.Content>
         <Card.Header> {friend.name_player} </Card.Header>
       </Card.Content>
     </Card>
-  </List.Item>
+  </Grid.Column>
   );
 
-  return(
-    <Segment >
-      <Header as='h2'>
-        Player Friends
-      </Header>
-      <List divided relaxed animated size='huge' horizontal verticalAlign='middle'>     
-        {friend_content}
-      </List>
-    </Segment>
-  );
+
+    if(props.friends.length > 4)
+    {
+      const mini_content = props.friends.slice(0,4);
+      const mini_friend_content = mini_content.map((friend) =>
+      
+        <Card>
+          <Image  src={friend.url_image} />
+          <Card.Content>
+            <Card.Header> {friend.name_player} </Card.Header>
+          </Card.Content>
+        </Card>
+      
+      );
+  
+      return(
+        <Segment >
+          <Header as='h2'>
+            Player Friends
+          </Header>
+          <Card.Group itemsPerRow={4}>     
+            {mini_friend_content}
+          </Card.Group>
+  
+          <Modal 
+            trigger={
+                <Card fluid color='red'>                  
+                  <Card.Content>
+                    <Card.Header> See All </Card.Header>
+                  </Card.Content>
+                </Card>
+            }
+            closeIcon
+            basic
+            
+            >
+          <Modal.Content>
+          <Header as='h2' textAlign='center'>
+              Player Friends
+            </Header>
+            <Card.Group centered textAlign='center' itemsPerRow={3} >   
+              {friend_content}
+            </Card.Group>
+          </Modal.Content>
+          </Modal>
+        </Segment>
+      );
+      
+    }
+    
+    return(
+      <Segment >
+        <Header as='h2'>
+          Player Friends
+        </Header>
+        <Card.Group itemsPerRow={4}>     
+          {friend_content}
+        </Card.Group>
+      </Segment> 
+    );
 }
 export default Profil;
