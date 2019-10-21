@@ -115,14 +115,7 @@ class Profil extends Component {
               <GameLister games={this.state.games} ></GameLister>
             :  
             activeItem ==='stat' ?//Graphique
-            <div id='graphic'>
-              <Chart 
-                options={this.state.options} 
-                series={this.state.series} 
-                type="donut" 
-                labels={this.state.labels}
-                width="700" />
-            </div>
+              <Graphic_Game options={this.state.options} series={this.state.series} labels={this.state.labels}/>
               
             :
             activeItem ==='friends' ?
@@ -200,13 +193,18 @@ function AllStat(props)
   );
 }
 //Graphic
-//à mettre à jour
 function Graphic_Game(props)
 {
   return(
-    <Sparklines data={[5, 10, 5, 20]} width={50} height={20} margin={5} xLabels={["nothing", "1","2","3"]}>
-      <SparklinesBars style={{ stroke: "white", strokeWidth: "0.1", fill: "#40c0f5" }}/>
-    </Sparklines>
+    
+    <div id='graphic'>
+    <Chart 
+      options={props.options} 
+      series={props.series} 
+      type="donut" 
+      labels={props.labels}
+      width="700" />
+  </div>
   );
 }
 

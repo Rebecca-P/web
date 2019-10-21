@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Button , Icon } from 'semantic-ui-react'
-import './App.css';
-import LogIn from './LogIn'
-import Profil from './Profil'
-import TestLog from './TestLog'
-import User_data from './User_data';
+import './Front/App.css';
+import LogIn from './Front/LogIn'
+import Profil from './Front/Profil'
+import TestLog from './Front/TestLog'
+import User_data from './Front/User_data';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 var user= new User_data();
+
 
 class App extends Component {
   

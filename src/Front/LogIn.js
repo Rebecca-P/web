@@ -66,6 +66,7 @@ class LogIn extends Component {
         if(this.state.psw === this.state.pswdefault)
         {
           alert('bon psw');
+          // <Link to="/profil"></Link>
         }else alert('mauvais psw');
       }else alert('mauvais email');
       
