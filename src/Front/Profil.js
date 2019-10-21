@@ -11,7 +11,7 @@ class Profil extends Component {
     super(props);
     this.state ={
       showForm : false,
-      /* nameUser : 'User',
+      nameUser : 'User',
       pictureUser: 'https://image.flaticon.com/icons/svg/235/235438.svg',
       numberGame: 10,
       level : 20,
@@ -40,15 +40,15 @@ class Profil extends Component {
         {id: 11, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerK'},
         {id: 12, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerL'},
         {id: 13, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerM'},
-      ], */
-      nameUser : props.nameUser,
-      pictureUser: props.pictureUser,
-      numberGame: props.numberGame,
-      level : props.level,
-      xp : props.xp,
-      hourAll: props.hourAll,
-      games : props.games,
-      friends : props.friends,
+      ], 
+      // nameUser : props.nameUser,
+      // pictureUser: props.pictureUser,
+      // numberGame: props.numberGame,
+      // level : props.level,
+      // xp : props.xp,
+      // hourAll: props.hourAll,
+      // games : props.games,
+      // friends : props.friends,
       //Diagramme
       options: {
         colors: ['#ced6fd', '#cefdde', '#fdcfce', '#fdceeb'],

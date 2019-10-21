@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require('cors')
 const mongoose = require("mongoose");
 const Account = require("./models/account")
 
@@ -8,6 +9,7 @@ const authentication = require("./services/authenticateUser")
 
 const getUser = require("./services/getUser")
 
+app.use(cors())
 app.use(express.json()); // for parsing application/json
 
 // Connecting to the database
@@ -29,11 +31,11 @@ mongoose.connect(
 //generateDB();
 
 
-app.post("/user", async function(req, res) {
+app.post("/user", async function(req, res, next) {
   const tmp_account = new Account()
   tmp_account.address = req.body.address;
   tmp_account.password = req.body.password;
-
+  console.log(req.body)
   /*if (!(tmp_account.address && tmp_account.password)) {
     res
       .status(400)
@@ -49,6 +51,6 @@ app.post("/user", async function(req, res) {
 });
 
 
-app.listen(3000, () => {
-    console.log("Server is running in port: 3000");
+app.listen(3001, () => {
+    console.log("Server is running in port: 3001");
   });

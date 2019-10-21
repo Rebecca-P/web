@@ -8,6 +8,7 @@ import { Button , Icon , Form , Divider } from 'semantic-ui-react'
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+const submitLogin = require("../envoieData");
 
 
 class LogIn extends Component {
@@ -25,8 +26,8 @@ class LogIn extends Component {
       email:'',
       psw: '',
 
-      emaildefault:'user1@user.fr',
-      pswdefault:'1234',
+      // emaildefault:'user1@user.fr',
+      // pswdefault:'1234',
     };
   }
 
@@ -57,20 +58,22 @@ class LogIn extends Component {
   }
 
   handleSubmit(event) {
-    if(this.state.isNew)
-    {
-      if(this.state.email === this.state.emaildefault)
-      {
-        alert('bon email');
+    // if(this.state.isNew)
+    // {
+    //   if(this.state.email === this.state.emaildefault)
+    //   {
+    //     alert('bon email');
         
-        if(this.state.psw === this.state.pswdefault)
-        {
-          alert('bon psw');
-          // <Link to="/profil"></Link>
-        }else alert('mauvais psw');
-      }else alert('mauvais email');
+    //     if(this.state.psw === this.state.pswdefault)
+    //     {
+    //       alert('bon psw');
+    //       // <Link to="/profil"></Link>
+    //     }else alert('mauvais psw');
+    //   }else alert('mauvais email');
       
-    }
+    // }
+    console.log("Button triggered");
+    submitLogin(this.state.email, this.state.psw);
       
     event.preventDefault();
   }
