@@ -6,7 +6,15 @@ afficher à partir de l'objet user et non à partir des variables des class
 import React, { Component  } from 'react'
 import { Button , Icon , Form , Divider } from 'semantic-ui-react'
 import './App.css';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useHistory,
+  useLocation
+} from "react-router-dom";
 
 
 
@@ -61,14 +69,13 @@ class LogIn extends Component {
     {
       if(this.state.email === this.state.emaildefault)
       {
-        alert('bon email');
-        
         if(this.state.psw === this.state.pswdefault)
         {
-          alert('bon psw');
-          // <Link to="/profil"></Link>
-        }else alert('mauvais psw');
-      }else alert('mauvais email');
+          
+          this.props.func_co(true)
+
+        }else this.props.func_co(false);
+      }else this.props.func_co(false);
       
     }
       

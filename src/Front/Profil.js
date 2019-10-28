@@ -3,15 +3,24 @@ import { Button , Icon , Statistic , Image , Grid , Segment , Header  , List , P
 import { Sparklines , SparklinesBars} from 'react-sparklines';
 import Chart from "react-apexcharts";
 import './App.css';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useHistory,
+  useLocation
+} from "react-router-dom";
 
 
 class Profil extends Component {
   constructor(props){
     super(props);
+    this.handleLog = this.handleLog.bind(this);
     this.state ={
       showForm : false,
-      /* nameUser : 'User',
+      nameUser : 'User',
       pictureUser: 'https://image.flaticon.com/icons/svg/235/235438.svg',
       numberGame: 10,
       level : 20,
@@ -40,15 +49,15 @@ class Profil extends Component {
         {id: 11, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerK'},
         {id: 12, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerL'},
         {id: 13, url_image:'https://images-na.ssl-images-amazon.com/images/I/514UKMPbGOL.jpg' , name_player:'PlayerM'},
-      ], */
-      nameUser : props.nameUser,
+      ], 
+      /*nameUser : props.nameUser,
       pictureUser: props.pictureUser,
       numberGame: props.numberGame,
       level : props.level,
       xp : props.xp,
       hourAll: props.hourAll,
       games : props.games,
-      friends : props.friends,
+      friends : props.friends,*/
       //Diagramme
       options: {
         colors: ['#ced6fd', '#cefdde', '#fdcfce', '#fdceeb'],
@@ -61,12 +70,14 @@ class Profil extends Component {
       
 
       //menu default onglet
-      activeItem: 'friends',
+      activeItem: 'home',
 
     };
   }
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
+  handleLog(){
+    this.props.func_co(false);
+  }
   render(){
     const  activeItem  = this.state.activeItem;
     const nb_game = this.state.games.length;
@@ -95,10 +106,12 @@ class Profil extends Component {
           />
           <Menu.Menu position='right'>
             <Menu.Item
-              name='logout'
-              active={activeItem === 'logout'}
-              onClick={this.handleItemClick}
-            />
+              // name='logout'
+              // active={activeItem === 'logout'}
+              onClick={this.handleLog}
+            >
+              <AuthButton></AuthButton>
+            </Menu.Item>
           </Menu.Menu>
         </Menu>
         
@@ -121,7 +134,8 @@ class Profil extends Component {
             activeItem ==='friends' ?
               <FriendLister friends={this.state.friends}></FriendLister>
             :
-            <AllStat pictureUser={this.state.pictureUser} nameUser={this.state.nameUser} level={this.state.level} xp={this.state.xp}></AllStat>
+              <AllStat pictureUser={this.state.pictureUser} nameUser={this.state.nameUser} level={this.state.level} xp={this.state.xp}></AllStat>
+            
           )
         }
         
@@ -208,7 +222,7 @@ function Graphic_Game(props)
   );
 }
 
-
+//List of Game
 function GameLister(props)
 {
   const game_content = props.games.map((game) =>
@@ -285,8 +299,7 @@ function GameLister(props)
   );
 }
 
-
-
+//List of friends
 function FriendLister(props)
 {
   
@@ -363,4 +376,22 @@ function FriendLister(props)
       </Segment> 
     );
 }
+
+///
+function AuthButton() {
+  let history = useHistory();
+
+  return (
+    
+      <Button
+        onClick={() => {
+          history.push("/");
+        }}
+      >
+        Log out
+      </Button>
+    
+  );
+}
+
 export default Profil;
