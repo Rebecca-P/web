@@ -15,9 +15,12 @@ function submitLogin(login_address, login_password)
       },  
       body: JSON.stringify(toSend)
   })
-  .then(function (data) {  
-    console.log('Request success: ', data);  
+  .then(function (response) {   
+    return response.json()
   })  
+  .then(function (data){
+    console.log('Request success: ', data); 
+  })
   .catch(function (error) {  
     console.log('Request failure: ', error);  
   });

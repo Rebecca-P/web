@@ -1,18 +1,18 @@
-const getUser = require("./getUser");
-
-async function authentication(userReceived, enteredAccount)
+function authentication(userQueryResponse, enteredAccount)
 {
-    if(!userReceived)
-    {
-        console.log("This e-mail doesn't exists. Please try again or sign up!");
-    }
-    else if(userReceived.account.password != enteredAccount.password)
-    {
-        console.log("The password is not correct");
-    }
-    else{
-        console.log("Authenticated");
-    }
+    return new Promise((resolve, reject) => {
+        if(!userQueryResponse.user)
+        {
+            reject(0);
+        } 
+        else if(userQueryResponse.user.account.password != enteredAccount.password)
+        {
+            reject(1);
+        }
+        else{
+            resolve(userQueryResponse);
+        }
+      })
     
 }
 

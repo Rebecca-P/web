@@ -1,5 +1,4 @@
 const User = require("../models/user");
-const Account = require("../models/account")
 
 function getUser(user_Account) {
   return new Promise((resolve, reject) => {

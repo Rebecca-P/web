@@ -35,19 +35,49 @@ app.post("/user", async function(req, res, next) {
   const tmp_account = new Account()
   tmp_account.address = req.body.address;
   tmp_account.password = req.body.password;
-  console.log(req.body)
-  /*if (!(tmp_account.address && tmp_account.password)) {
+  if (!(tmp_account.address && tmp_account.password)) {
     res
       .status(400)
       .send({ msg: "You should specify the mail and the password of the user to get" });
   } 
   else {
-    const userQueryResponse = await getUser(tmp_account);
+    getUser(tmp_account)
+      .then( function(userQueryResponse) {
+        return authentication(userQueryResponse, tmp_account)
+      })
+      .then(function(userQueryResponse) {
+        res
+          .status(userQueryResponse.statusCode)
+          .json(userQueryResponse.user);
+      })
+      .catch(function(errormsg) {
+        console.log(errormsg)
+        if(errormsg === 1)
+        {
+          res
+            .status(403)
+            .send({msg: "The password is not correct, please retry."})
+        }
+        else if(errormsg === 0)
+        {
+          res
+            .status(403)
+            .send({msg: "This e-mail doesn't exists in our database. Please try again or sign up!"})
+        }
+      });
+
+    /*res
+      .status(userQueryResponse.statusCode)
+      .setHeader('Content-Type', 'application/json')
+      .send({ msg: "Authentication successful" })
+      .send(JSON.stringify(userQueryResponse.user));
     res
       .status(userQueryResponse.statusCode)
-      .send({ msg: "OK" });
-    authentication(userQueryResponse.user, tmp_account);
-  }*/
+      .send("The password is not correct");
+    res
+      .status(userQueryResponse.statusCode)
+      .send("This e-mail doesn't exists. Please try again or sign up!");*/
+  }
 });
 
 
