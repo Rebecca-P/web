@@ -1,29 +1,29 @@
-/*const Note = require("../models/note");
+const User = require("../models/user");
 
-function updateNote(noteId, newContent) {
-  return new Promise(resolve => {
-    Note.findById(noteId, (err, foundedNote) => {
+function updateUser(userId, updates) {
+  return new Promise((resolve, reject) => {
+    User.findById(userId, (err, foundedUser) => {
       if (err) {
-        resolve({
+        reject({
           statusCode: 500,
           msg: "An internal error occurred while processing the request"
         });
-      } else if (!foundedNote) {
-        resolve({
+      } else if (!foundedUser) {
+        reject({
           statusCode: 200,
-          msg: "No note is associated to the indicated id"
+          msg: "No user is associated to the indicated id"
         });
       } else {
-        Note.findOneAndUpdate({ _id: noteId }, { content: newContent }, err => {
+        User.findOneAndUpdate({ _id: userId }, updates, err => {
           if (err) {
-            resolve({
+            reject({
               statusCode: 500,
               msg: "An internal error occurred while processing the request"
             });
           } else {
             resolve({
               statusCode: 200,
-              msg: "The note is updated successfully"
+              msg: "The user is updated successfully"
             });
           }
         });
@@ -32,5 +32,4 @@ function updateNote(noteId, newContent) {
   });
 }
 
-module.exports = updateNote;
-*/
+module.exports = updateUser;

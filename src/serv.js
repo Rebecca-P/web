@@ -11,6 +11,7 @@ const authentication = require("./services/authenticateUser");
 const getUser = require("./services/getUser");
 const saveUser = require("./services/saveUser");
 const deleteUser = require("./services/deleteUser");
+const updateUser = require("./services/updateUser");
 
 app.use(cors());
 app.use(express.json()); // for parsing application/json
@@ -29,6 +30,7 @@ mongoose.connect(
     }
   }
 );
+mongoose.set('useFindAndModify', false);
 
 //Uncomment if you want to generate a new (test) database
 //generateDB();
@@ -72,11 +74,40 @@ app.post("/saveUser", function(req, res, next) {
       res
         .status(saveQueryResponse.statusCode)
         .send(saveQueryResponse.msg);
+    })
+    .catch( function(errormsg) {
+      res
+        .status(errormsg.statusCode)
+        .send(errormsg.msg)
     });
 });
 
 app.delete("/deleteUser", function(req, res, next){
-  deleteUser(req.body.userId);
+  deleteUser(req.body.userId)
+    .then( function(deleteQueryResponse) {
+      res
+        .status(deleteQueryResponse.statusCode)
+        .send(deleteQueryResponse.msg);
+    })
+    .catch( function(errormsg) {
+      res
+        .status(errormsg.statusCode)
+        .send(errormsg.msg)
+    });
+});
+
+app.put("/updateUser", function(req, res, next){
+  updateUser(req.body.userId, req.body.updates)
+    .then( function(updateQueryResponse) {
+      res
+        .status(updateQueryResponse.statusCode)
+        .send(updateQueryResponse.msg);
+    })
+    .catch( function(errormsg) {
+      res
+        .status(errormsg.statusCode)
+        .send(errormsg.msg)
+    });
 });
 
 app.listen(3001, () => {
