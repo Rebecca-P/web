@@ -1,16 +1,27 @@
 function authentication(userQueryResponse, enteredAccount)
 {
+    const user = userQueryResponse.user;
     return new Promise((resolve, reject) => {
-        if(!userQueryResponse.user)
+        if(!user)
         {
-            reject(0);
+            reject(
+                {
+                    msg: "This e-mail doesn't exists in our database. Please try again or sign up!",
+                    statusCode: 403
+                });
         } 
-        else if(userQueryResponse.user.account.password != enteredAccount.password)
+        else if(user.account.password !== enteredAccount.password)
         {
-            reject(1);
+            reject({
+                msg: "The password is not correct, please retry.",
+                statusCode: 403
+            });
         }
         else{
-            resolve(userQueryResponse);
+            resolve({
+                statusCode: 200,
+                user
+            });
         }
       })
     

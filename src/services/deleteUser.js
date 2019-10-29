@@ -2,7 +2,7 @@ const User = require("../models/user");
 
 function deleteUser(userId) {
   return new Promise(resolve => {
-    Note.findById(userId, (err, foundedUser) => {
+    User.findById(userId, (err, foundedUser) => {
       if (err) {
         resolve({
           statusCode: 500,
@@ -14,7 +14,7 @@ function deleteUser(userId) {
           msg: "No user is associated to the indicated id"
         });
       } else {
-        Note.findOneAndDelete({ _id: userId }, err => {
+        User.findOneAndDelete({ _id: userId }, err => {
           if (err) {
             resolve({
               statusCode: 500,
@@ -32,4 +32,4 @@ function deleteUser(userId) {
   });
 }
 
-module.exports = deleteNote;
+module.exports = deleteUser;

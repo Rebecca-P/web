@@ -2,10 +2,10 @@ const User = require("../models/user");
 
 function saveUser(userToSave) {
   const newUser = new User(userToSave);
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     newUser.save(function(err) {
       if (err) {
-        resolve({
+        reject({
           statusCode: 500,
           msg: "An internal error occurred while processing the request"
         });

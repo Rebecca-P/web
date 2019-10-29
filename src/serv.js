@@ -2,14 +2,17 @@ const express = require("express");
 const app = express();
 const cors = require('cors')
 const mongoose = require("mongoose");
-const Account = require("./models/account")
+const Account = require("./models/account");
+const User = require("./models/user");
 
-const generateDB = require("./dbGenerator")
-const authentication = require("./services/authenticateUser")
+const generateDB = require("./dbGenerator");
+const authentication = require("./services/authenticateUser");
 
-const getUser = require("./services/getUser")
+const getUser = require("./services/getUser");
+const saveUser = require("./services/saveUser");
+const deleteUser = require("./services/deleteUser");
 
-app.use(cors())
+app.use(cors());
 app.use(express.json()); // for parsing application/json
 
 // Connecting to the database
@@ -31,55 +34,50 @@ mongoose.connect(
 //generateDB();
 
 
-app.post("/user", async function(req, res, next) {
+app.post("/user", function(req, res, next) {
   const tmp_account = new Account()
   tmp_account.address = req.body.address;
   tmp_account.password = req.body.password;
-  if (!(tmp_account.address && tmp_account.password)) {
-    res
-      .status(400)
-      .send({ msg: "You should specify the mail and the password of the user to get" });
-  } 
-  else {
-    getUser(tmp_account)
-      .then( function(userQueryResponse) {
-        return authentication(userQueryResponse, tmp_account)
-      })
-      .then(function(userQueryResponse) {
-        res
-          .status(userQueryResponse.statusCode)
-          .json(userQueryResponse.user);
-      })
-      .catch(function(errormsg) {
-        console.log(errormsg)
-        if(errormsg === 1)
-        {
-          res
-            .status(403)
-            .send({msg: "The password is not correct, please retry."})
-        }
-        else if(errormsg === 0)
-        {
-          res
-            .status(403)
-            .send({msg: "This e-mail doesn't exists in our database. Please try again or sign up!"})
-        }
-      });
-
-    /*res
-      .status(userQueryResponse.statusCode)
-      .setHeader('Content-Type', 'application/json')
-      .send({ msg: "Authentication successful" })
-      .send(JSON.stringify(userQueryResponse.user));
-    res
-      .status(userQueryResponse.statusCode)
-      .send("The password is not correct");
-    res
-      .status(userQueryResponse.statusCode)
-      .send("This e-mail doesn't exists. Please try again or sign up!");*/
-  }
+  //We don't need to check if body.address or body.password are empty 
+  //because this is done in the front part
+  getUser(tmp_account)
+    .then( function(userQueryResponse) {
+      return authentication(userQueryResponse, tmp_account)
+    })
+    .then(function(userQueryResponse) {
+      res
+        .status(userQueryResponse.statusCode)
+        .json(userQueryResponse.user);
+    })
+    .catch(function(errormsg) {
+      res
+          .status(errormsg.statusCode)
+          .json(errormsg.msg)
+    });
 });
 
+app.post("/saveUser", function(req, res, next) {
+  let userToCreate = new User();
+  let accountToCreate = new Account();
+
+  //We don't need to check if body.address or body.password are empty 
+  //because this is done in the front part
+  accountToCreate.address = req.body.address;
+  accountToCreate.password = req.body.password;
+
+  userToCreate.account = accountToCreate;
+
+  saveUser(userToCreate)
+    .then( function(saveQueryResponse) {
+      res
+        .status(saveQueryResponse.statusCode)
+        .send(saveQueryResponse.msg);
+    });
+});
+
+app.delete("/deleteUser", function(req, res, next){
+  deleteUser(req.body.userId);
+});
 
 app.listen(3001, () => {
     console.log("Server is running in port: 3001");
