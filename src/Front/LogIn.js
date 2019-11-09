@@ -8,7 +8,8 @@ import { Button , Icon , Form , Divider } from 'semantic-ui-react'
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-const submitLogin = require("../envoieData");
+const submitLogin = require("../requests/submitLogin");
+const submitCreateUser = require('../requests/submitCreateUser');
 
 
 class LogIn extends Component {
@@ -58,24 +59,10 @@ class LogIn extends Component {
   }
 
   handleSubmit(event) {
-    // if(this.state.isNew)
-    // {
-    //   if(this.state.email === this.state.emaildefault)
-    //   {
-    //     alert('bon email');
-        
-    //     if(this.state.psw === this.state.pswdefault)
-    //     {
-    //       alert('bon psw');
-    //       // <Link to="/profil"></Link>
-    //     }else alert('mauvais psw');
-    //   }else alert('mauvais email');
-      
-    // }
-    console.log("Button triggered");
-    submitLogin(this.state.email, this.state.psw);
-      
+    //submitLogin(this.state.email, this.state.psw);
     event.preventDefault();
+
+    submitCreateUser("abon", "abc@hotmail.fr", "abc");
   }
 
   render(){
@@ -165,8 +152,6 @@ function ContinuGame(props)
 
 function ShowSignIn(props)
 {
-  
-  
   return(
     
     <div id="box_sign">
