@@ -9,10 +9,20 @@ function getUser(user_Account) {
           msg: "An internal error occurred while processing the request"
         });
       } else {
-        resolve({
-          statusCode: 200,
-          user
-        });
+        if(user != null)
+        {
+          resolve({
+            statusCode: 200,
+            msg: "User found",
+            user
+          });
+        }
+        else{
+          reject({
+            statusCode: 500,
+            msg: "User not found"
+          })
+        }
       }
     });
   });

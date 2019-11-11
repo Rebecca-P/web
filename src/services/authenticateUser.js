@@ -23,7 +23,7 @@ function authentication(userQueryResponse, enteredAccount)
                 user
             });
         }
-      })
+      });
     
 }
 

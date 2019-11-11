@@ -1,16 +1,14 @@
+
 //Profil random
 const imageUser = require('./Front/Component/imageUser')
 const userNameUser = require('./Front/Component/userNameUser')
 
-//
 const saveUser = require("./services/saveUser")
 const User = require("./models/user")
 const Account = require("./models/account")
 const Game = require("./models/game")
 const Friend = require("./models/friend")
 const Profile = require("./models/profile")
-
-
 
 function randomNumber(max) {
     
@@ -38,8 +36,6 @@ function changeThreeFirstLetters(c, i)
 
 async function generateDB ()
 {
-    
-
     for(var i=0; i<5; i++)
     {
         var temp_Account = new Account();
@@ -79,7 +75,6 @@ async function generateDB ()
         temp_Profile.level = 25;
         temp_Profile.XP = 80;
 
-        
         var temp_Friend = new Friend();
         temp_idex_name = randomNumber(70);
         temp_index_pic = randomNumber(45);
@@ -103,6 +98,7 @@ async function generateDB ()
         temp_index_pic = randomNumber(45);
         temp_Friend4.userName = userNameUser[temp_idex_name];
         temp_Friend4.urlImage = imageUser[temp_index_pic];
+
 
 
         var temp_User = new User;

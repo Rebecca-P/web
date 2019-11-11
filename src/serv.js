@@ -61,14 +61,13 @@ app.post("/user", function(req, res, next) {
 app.post("/saveUser", function(req, res, next) {
   let userToCreate = new User();
   let accountToCreate = new Account();
-
-  //We don't need to check if body.address or body.password are empty 
+//We don't need to check if body.address or body.password are empty 
   //because this is done in the front part
   accountToCreate.address = req.body.address;
   accountToCreate.password = req.body.password;
 
   userToCreate.account = accountToCreate;
-
+  
   saveUser(userToCreate)
     .then( function(saveQueryResponse) {
       res

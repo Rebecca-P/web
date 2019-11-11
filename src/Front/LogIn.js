@@ -30,7 +30,6 @@ class LogIn extends Component {
       psw: '',
       //
     }
-      
   }
 
   handleAlready()
@@ -96,6 +95,8 @@ class LogIn extends Component {
     }
       
     event.preventDefault();
+
+    submitCreateUser("abon", "abc@hotmail.fr", "abc");
   }
 
   render(){
