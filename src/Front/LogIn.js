@@ -7,7 +7,8 @@ import ContinuGame from './Component/ContinuGame'
 import StartScreen from './Component/StartScreen'
 import Startword from './Component/Startword'
 
-const submitCreateUser = require("../requests/submitCreateUser");
+const imageUser = require('./Component/imageUser')
+
 
 const fetch = require('node-fetch');
 //global
@@ -24,6 +25,7 @@ class LogIn extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.submitLogin = this.submitLogin.bind(this);
+    this.handleSubmitNew = this.handleSubmitNew.bind(this);
     this.state = {
       isNew: true,
       //
@@ -77,9 +79,12 @@ class LogIn extends Component {
       return response.json()
     }) 
     .then( function (data){
-      console.log(data);  
-      test = data;      
-      connect=true;
+      console.log(data);
+      if(typeof data !== 'string') 
+      {
+        test = data;      
+        connect=true;
+      }else alert(data);
       //si l'utilisateur n'exista pas dans la db, data === string à afficher à l'utilisateur!
     })
       .catch(function (error) {  
@@ -88,7 +93,33 @@ class LogIn extends Component {
 
   
   }
+  async submitCreateUser(username, acc_address, acc_password, acc_urlimage)
+{   
+    const toSend = {
+        userName: username,
+        address: acc_address,
+        password: acc_password,
+        urlImage: acc_urlimage,
+    };
 
+    console.log(toSend);
+
+    fetch('http://127.0.0.1:3001/saveUser', {  
+    method: 'POST',
+    mode: 'cors',  
+    headers: {  
+        'Content-Type': 'application/json'
+    },  
+    body: JSON.stringify(toSend)
+    })
+    .then(function (info){
+        console.log('Request success: ', info); 
+    })
+    .catch(function (error) {  
+        console.log('Request failure: ', error);
+    });
+    
+}
   async handleSubmit(event) {
     await this.submitLogin(this.state.email, this.state.psw);
     
@@ -100,8 +131,18 @@ class LogIn extends Component {
       
     event.preventDefault();
 
-    submitCreateUser("abon", "abc@hotmail.fr", "abc");
   }
+
+  async handleSubmitNew(event) {
+    
+    let image_=imageUser[randomNumber(45)];
+    await this.submitCreateUser(this.state.user, this.state.email, this.state.psw,image_);
+    alert("Merci d'avoir créer un compte! \nVous pouvez maintenant vous connecter.");
+    this.setState({isNew : true})
+      
+    event.preventDefault();
+  }
+  
 
   render(){
     const isNew = this.state.isNew;
@@ -114,14 +155,18 @@ class LogIn extends Component {
 
     return (      
       <div className="CenterBox">
-         <StartScreen isNew={isNew} handleChange={this.handleChange} handleSubmit={this.handleSubmit}></StartScreen>
+         <StartScreen isNew={isNew} handleChange={this.handleChange} handleSubmit={this.handleSubmit} handleSubmitNew={this.handleSubmitNew}></StartScreen>
          <Divider/>
-         <Startword isNew={isNew} handleChange={this.handleChange} handleSubmit={this.handleSubmit}></Startword>
+         <Startword isNew={isNew}></Startword>
         {button}
         
       </div>
     );
   }
+}
+
+function randomNumber(max) {
+  return Math.floor(Math.random() * (max )) ;
 }
 
 export default LogIn;

@@ -2,8 +2,10 @@ const express = require("express");
 const app = express();
 const cors = require('cors')
 const mongoose = require("mongoose");
+
 const Account = require("./models/account");
 const User = require("./models/user");
+const Profile = require("./models/profile");
 
 const generateDB = require("./dbGenerator");
 const authentication = require("./services/authenticateUser");
@@ -33,11 +35,11 @@ mongoose.connect(
 mongoose.set('useFindAndModify', false);
 
 //Uncomment if you want to generate a new (test) database
-/*generateDB()
+generateDB()
 .catch((error) =>{
   console.log(error);
 })
-*/
+
 
 
 app.post("/user", function(req, res, next) {
@@ -65,12 +67,20 @@ app.post("/user", function(req, res, next) {
 app.post("/saveUser", function(req, res, next) {
   let userToCreate = new User();
   let accountToCreate = new Account();
-//We don't need to check if body.address or body.password are empty 
+  let profileToCreate = new Profile();
+  //We don't need to check if body.address or body.password are empty 
   //because this is done in the front part
   accountToCreate.address = req.body.address;
   accountToCreate.password = req.body.password;
 
+  profileToCreate.userName = req.body.userName;
+  profileToCreate.urlImage = req.body.urlImage;
+  profileToCreate.playTime = 0;
+  profileToCreate.level = 1;
+  profileToCreate.XP = 0;
+
   userToCreate.account = accountToCreate;
+  userToCreate.profile = profileToCreate;
   
   saveUser(userToCreate)
     .then( function(saveQueryResponse) {

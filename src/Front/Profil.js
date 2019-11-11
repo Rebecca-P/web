@@ -12,6 +12,10 @@ import gameItem from './Component/Game_Market'
 import Communaute from './Component/Communaute'
 import DeleteButton from './Component/DeleteButton'
 import Color from './Component/Colors'
+
+const fetch = require('node-fetch');
+//Valeur par default
+let compteur=0;
 class Profil extends Component {
   constructor(props){
     super(props);
@@ -19,6 +23,7 @@ class Profil extends Component {
     this.handleAddGame = this.handleAddGame.bind(this);
     this.handleAddHour = this.handleAddHour.bind(this);
     this.handleStat = this.handleStat.bind(this);
+    this.updateUserGames = this.updateUserGames.bind(this);
     this.state ={   
       games : [],
       //menu default onglet
@@ -27,22 +32,49 @@ class Profil extends Component {
   }
  
   
+async updateUserGames(updatedGames, user_id)
+{
+  const toSend = {
+    games: updatedGames,
+    userId: user_id,
+  };
 
-  handleAddGame(name)
+  //console.log(toSend);
+
+  await fetch('http://127.0.0.1:3001/updateUser', {  
+      method: 'PUT',
+      mode: 'cors',  
+      headers: {  
+        'Content-Type': 'application/json'
+      },  
+      body: JSON.stringify(toSend)
+  })
+  .then(function (){
+    //console.log('Games updated successfully');
+  })
+  .catch(function (error) {  
+    console.log('Request failure: ', error);  
+    return error;
+  });
+}
+  
+
+  async handleAddGame(name)
   {  
     if(this.state.games.find( game => game.name_game === name) === undefined)
     {
       const resultat = gameItem.find( game => game.name === name);
       this.setState({
-        games: [ ...this.state.games, { url_image:resultat.image , name_game:resultat.name, hour_game:0, tags:resultat.tag }],
+        games: [ ...this.state.games , { url_image:resultat.image , name_game:resultat.name, hour_game:0, tags:resultat.tag }],
       }, () => {
-        //console.log(this.state.games);
+        console.log(this.state.games);
         //console.log(resultat);
+        this.updateUserGames(this.state.games, this.props.user._id);
+
       });
-      
+
     }else alert('Ah bah en fait non... Tu as déjà le jeu!');
 
-    
   }
 
   handleAddHour(name)
@@ -51,7 +83,6 @@ class Profil extends Component {
     let index = games.findIndex(game => game.name_game === name);
     games[index] = {...games[index], hour_game: games[index].hour_game+1};
     this.setState({ games }); 
-  
   }
 
   handleStat(game_)
@@ -85,33 +116,27 @@ class Profil extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
   
   handleLog(){
+    
     this.props.func_co(false);
+    compteur=0;
   }
   
   render(){
     const  activeItem  = this.state.activeItem;
-    const nb_game = this.state.games.length;
-
-    
-    let hour = 0;
-    if(this.state.games !== undefined)
-      this.state.games.forEach(function(element) {
-        hour += element.hour_game;
-      });
-
-    //Utilisation direct de la props
-    //Valeur par default
     let key_=0;
     let name_='';
     let image_='https://image.flaticon.com/icons/svg/235/235438.svg';
     let level_=0;
     let xp_=0;
+    let hour = 0;
+    let nb_game = 0;
     let friends = [];
     let games_=[];
     let series= [44, 55, 41, 17];
     let labels= ['Rpg', 'Simulation', 'Musique', 'Combat'];
     let stat= [];
 
+    //Utilisation direct de la props
     //Valeur MAJ
     if(this.props.user!== null)
     {
@@ -121,10 +146,24 @@ class Profil extends Component {
       level_=this.props.user.profile.level;
       xp_=this.props.user.profile.XP;
       friends =this.props.user.friends;
-      this.props.user.games.forEach(function(element) {
-        games_.push({ url_image:element.urlImage , name_game:element.name, hour_game:element.playTime, tags:element.tags })
+      games_=[];//clear
+      if(compteur===0)
+      {
+        this.props.user.games.forEach(function(element) {
+          games_.push({ url_image:element.urlImage , name_game:element.name, hour_game:element.playTime, tags:element.tags })
+        });
+        Array.prototype.push.apply(games_, this.state.games);
+        this.setState({ games: games_ });
+        compteur++;
+      }else{
+        games_=this.state.games;
+      }
+      
+      //if(this.state.games !== undefined)
+      games_.forEach(function(element) {
+        hour += element.hour_game;
       });
-      Array.prototype.push.apply(games_, this.state.games);
+      nb_game = games_.length;
       stat = this.handleStat(games_);
       labels = stat[0];
       series = stat[1];

@@ -4,7 +4,8 @@ import ShowLogIn from './ShowLogIn'
 export default function StartScreen(props)
 {
   if(!props.isNew){
-    return <ShowSignIn handleChange={props.handleChange} handleSubmit={props.handleSubmit}/>;
+    return <ShowSignIn handleChange={props.handleChange} handleSubmit={props.handleSubmitNew}/>;
   }
   return <ShowLogIn handleChange={props.handleChange} handleSubmit={props.handleSubmit}/>;
 }
+ 
