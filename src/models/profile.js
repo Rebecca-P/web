@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const profileSchema = new mongoose.Schema({ 
     userName: String, 
     urlImage: String, 
-    playTime: String,
+    playTime: Number,
     level: Number,
     XP: Number
 });

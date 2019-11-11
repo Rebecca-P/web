@@ -39,6 +39,7 @@ class Profil extends Component {
         //console.log(this.state.games);
         //console.log(resultat);
       });
+      
     }else alert('Ah bah en fait non... Tu as déjà le jeu!');
 
     
@@ -110,6 +111,7 @@ class Profil extends Component {
     let series= [44, 55, 41, 17];
     let labels= ['Rpg', 'Simulation', 'Musique', 'Combat'];
     let stat= [];
+
     //Valeur MAJ
     if(this.props.user!== null)
     {
@@ -168,7 +170,7 @@ class Profil extends Component {
               <AuthButton deco={this.handleLog} ></AuthButton>
             </Menu.Item>
             <Menu.Item >
-              <DeleteButton deco={this.handleLog}></DeleteButton>
+              <DeleteButton deco={this.handleLog} userId={key_}></DeleteButton>
             </Menu.Item>
           </Menu.Menu>
         </Menu>

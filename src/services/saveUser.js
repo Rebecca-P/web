@@ -14,7 +14,7 @@ function saveUser(userToSave) {
     })
     .catch(function(errormsg)
     {
-      if(errormsg.msg === "User not found")
+      if(errormsg.msg === "This e-mail address doesn't exists. Please try again or sigh in!")
       {
         newUser.save(function(err) {
           if (err) {

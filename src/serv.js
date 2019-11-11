@@ -15,10 +15,10 @@ const updateUser = require("./services/updateUser");
 
 app.use(cors());
 app.use(express.json()); // for parsing application/json
-//blablablabla
+
 // Connecting to the database
 mongoose.connect(
-  "mongodb://localhost:27017/DB_Test",
+  "mongodb://localhost:27017/Web_Project",
   { useNewUrlParser: true },
   err => {
     if (err) {
@@ -33,7 +33,11 @@ mongoose.connect(
 mongoose.set('useFindAndModify', false);
 
 //Uncomment if you want to generate a new (test) database
-//generateDB();
+/*generateDB()
+.catch((error) =>{
+  console.log(error);
+})
+*/
 
 
 app.post("/user", function(req, res, next) {

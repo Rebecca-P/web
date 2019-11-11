@@ -20,7 +20,7 @@ function getUser(user_Account) {
         else{
           reject({
             statusCode: 500,
-            msg: "User not found"
+            msg: "This e-mail address doesn't exists. Please try again or sigh in!"
           })
         }
       }
