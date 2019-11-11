@@ -7,6 +7,8 @@ import ContinuGame from './Component/ContinuGame'
 import StartScreen from './Component/StartScreen'
 import Startword from './Component/Startword'
 
+const submitCreateUser = require("../requests/submitCreateUser");
+
 const fetch = require('node-fetch');
 //global
 //
@@ -30,7 +32,6 @@ class LogIn extends Component {
       psw: '',
       //
     }
-      
   }
 
   handleAlready()
@@ -72,12 +73,14 @@ class LogIn extends Component {
       },  
       body: JSON.stringify(toSend)
     })
-    .then(function (response) {   
+    .then(function (response) { 
       return response.json()
     }) 
     .then( function (data){
+      console.log(data);  
       test = data;      
       connect=true;
+      //si l'utilisateur n'exista pas dans la db, data === string à afficher à l'utilisateur!
     })
       .catch(function (error) {  
         alert(error);
@@ -96,6 +99,8 @@ class LogIn extends Component {
     }
       
     event.preventDefault();
+
+    submitCreateUser("abon", "abc@hotmail.fr", "abc");
   }
 
   render(){

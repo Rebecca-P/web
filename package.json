@@ -2,6 +2,7 @@
   "name": "moblie2",
   "version": "0.1.0",
   "private": true,
+  
   "dependencies": {
     "apexcharts": "^3.8.6",
     "cors": "^2.8.5",

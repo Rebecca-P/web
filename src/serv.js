@@ -18,7 +18,7 @@ app.use(express.json()); // for parsing application/json
 
 // Connecting to the database
 mongoose.connect(
-  "mongodb://localhost:27017/DB_Test",
+  "mongodb://localhost:27017/Web_Project",
   { useNewUrlParser: true },
   err => {
     if (err) {
@@ -33,7 +33,11 @@ mongoose.connect(
 mongoose.set('useFindAndModify', false);
 
 //Uncomment if you want to generate a new (test) database
-//generateDB();
+/*generateDB()
+.catch((error) =>{
+  console.log(error);
+})
+*/
 
 
 app.post("/user", function(req, res, next) {
@@ -61,14 +65,13 @@ app.post("/user", function(req, res, next) {
 app.post("/saveUser", function(req, res, next) {
   let userToCreate = new User();
   let accountToCreate = new Account();
-
-  //We don't need to check if body.address or body.password are empty 
+//We don't need to check if body.address or body.password are empty 
   //because this is done in the front part
   accountToCreate.address = req.body.address;
   accountToCreate.password = req.body.password;
 
   userToCreate.account = accountToCreate;
-
+  
   saveUser(userToCreate)
     .then( function(saveQueryResponse) {
       res
