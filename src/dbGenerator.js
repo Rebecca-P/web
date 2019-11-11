@@ -38,8 +38,6 @@ function changeThreeFirstLetters(c, i)
 
 async function generateDB ()
 {
-    
-
     for(var i=0; i<5; i++)
     {
         var temp_Account = new Account();

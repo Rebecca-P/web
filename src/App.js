@@ -3,7 +3,7 @@ import { Button  } from 'semantic-ui-react'
 import './Front/App.css';
 import LogIn from './Front/LogIn'
 import Profil from './Front/Profil'
-import User_data from './Front/User_data';
+//import User_data from './Front/User_data';
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,7 +11,7 @@ import {
   Redirect,
 
 } from "react-router-dom";
-import { thisExpression } from '@babel/types';
+//import { thisExpression } from '@babel/types';
 /**
  * Ajouter un bouton pour supprimer le compte
  */
