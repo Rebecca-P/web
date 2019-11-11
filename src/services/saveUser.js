@@ -4,7 +4,6 @@ const getUser = require("./getUser");
 function saveUser(userToSave) {
   const newUser = new User(userToSave);
   return new Promise((resolve, reject) => {
-
     getUser(newUser.account)
     .then(function(foundedUser)
     {
