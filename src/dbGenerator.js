@@ -1,3 +1,8 @@
+
+//Profil random
+const imageUser = require('./Front/Component/imageUser')
+const userNameUser = require('./Front/Component/userNameUser')
+
 const saveUser = require("./services/saveUser")
 const User = require("./models/user")
 const Account = require("./models/account")
@@ -5,6 +10,10 @@ const Game = require("./models/game")
 const Friend = require("./models/friend")
 const Profile = require("./models/profile")
 
+function randomNumber(max) {
+    
+    return Math.floor(Math.random() * (max )) ;
+  }
 function nextChar(c, i) {
     return String.fromCharCode(c.charCodeAt(0) + i);
 }
@@ -57,30 +66,39 @@ async function generateDB ()
         temp_Game3.tags.push('Beat them All');
 
         var temp_Profile = new Profile();
-        var t_userName = "User ";
-        var tmp = i+1;
-        t_userName += tmp.toString();
+        var temp_idex_name = randomNumber(70);
+        var temp_index_pic = randomNumber(45);
+        var t_userName = userNameUser[temp_idex_name];
+        temp_Profile.urlImage = imageUser[temp_index_pic];
         temp_Profile.userName = t_userName;
-        temp_Profile.urlImage = "image0.png";
         temp_Profile.playTime= "1100 h"
         temp_Profile.level = 25;
         temp_Profile.XP = 80;
 
         var temp_Friend = new Friend();
-        temp_Friend.userName = "Friend 1";
-        temp_Friend.urlImage = "image1.png";
+        temp_idex_name = randomNumber(70);
+        temp_index_pic = randomNumber(45);
+        temp_Friend.userName = userNameUser[temp_idex_name];
+        temp_Friend.urlImage = imageUser[temp_index_pic];
 
         var temp_Friend2 = new Friend();
-        temp_Friend2.userName = "Friend 2";
-        temp_Friend2.urlImage = "image2.png";
+        temp_idex_name = randomNumber(70);
+        temp_index_pic = randomNumber(45);
+        temp_Friend2.userName = userNameUser[temp_idex_name];
+        temp_Friend2.urlImage = imageUser[temp_index_pic];
 
         var temp_Friend3 = new Friend();
-        temp_Friend3.userName = "Friend 3";
-        temp_Friend3.urlImage = "image3.png";
+        temp_idex_name = randomNumber(70);
+        temp_index_pic = randomNumber(45);
+        temp_Friend3.userName = userNameUser[temp_idex_name];
+        temp_Friend3.urlImage = imageUser[temp_index_pic];
 
         var temp_Friend4 = new Friend();
-        temp_Friend4.userName = "Friend 4";
-        temp_Friend4.urlImage = "image4.png";
+        temp_idex_name = randomNumber(70);
+        temp_index_pic = randomNumber(45);
+        temp_Friend4.userName = userNameUser[temp_idex_name];
+        temp_Friend4.urlImage = imageUser[temp_index_pic];
+
 
 
         var temp_User = new User;

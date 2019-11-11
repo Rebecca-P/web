@@ -4,7 +4,6 @@ const cors = require('cors')
 const mongoose = require("mongoose");
 const Account = require("./models/account");
 const User = require("./models/user");
-const Profile = require("./models/profile");
 
 const generateDB = require("./dbGenerator");
 const authentication = require("./services/authenticateUser");
@@ -62,18 +61,13 @@ app.post("/user", function(req, res, next) {
 app.post("/saveUser", function(req, res, next) {
   let userToCreate = new User();
   let accountToCreate = new Account();
-  let profileToCreate = new Profile();
-
-  //We don't need to check if body.address or body.password are empty 
+//We don't need to check if body.address or body.password are empty 
   //because this is done in the front part
-  
   accountToCreate.address = req.body.address;
   accountToCreate.password = req.body.password;
-  profileToCreate.userName = req.body.userName;
 
   userToCreate.account = accountToCreate;
-  userToCreate.profile = profileToCreate;
-
+  
   saveUser(userToCreate)
     .then( function(saveQueryResponse) {
       res
@@ -113,25 +107,6 @@ app.put("/updateUser", function(req, res, next){
         .status(errormsg.statusCode)
         .send(errormsg.msg)
     });
-});
-
-app.get("/getUser", function(req, res, next){
-  let tmpAccount = new Account();
-  tmpAccount.address = req.body.address;
-  tmpAccount.password = req.body.password;
-
-  getUser(tmpAccount)
-  .then( function(getQueryResponse) {
-    res
-      .status(getQueryResponse.statusCode)
-      .send(getQueryResponse.msg);
-  })
-  .catch( function(errormsg) {
-    res
-      .status(errormsg.statusCode)
-      .send(errormsg.msg)
-  });
-
 });
 
 app.listen(3001, () => {
