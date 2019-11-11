@@ -14,6 +14,7 @@ const getUser = require("./services/getUser");
 const saveUser = require("./services/saveUser");
 const deleteUser = require("./services/deleteUser");
 const updateUser = require("./services/updateUser");
+const getAllUsers = require("./services/getAllUsers");
 
 app.use(cors());
 app.use(express.json()); // for parsing application/json
@@ -35,12 +36,12 @@ mongoose.connect(
 mongoose.set('useFindAndModify', false);
 
 //Uncomment if you want to generate a new (test) database
-generateDB()
-.catch((error) =>{
-  console.log(error);
+/*generateDB()
+.catch(() =>{
+  console.log("Database already exists!");
 })
 
-
+*/
 
 app.post("/user", function(req, res, next) {
   const tmp_account = new Account()
@@ -110,7 +111,21 @@ app.delete("/deleteUser", function(req, res, next){
 });
 
 app.put("/updateUser", function(req, res, next){
-  updateUser(req.body.userId, req.body.updates)
+  console.log(req.body);
+  const tmpReq = JSON.stringify(req.body);
+  let updates = null;
+  if(tmpReq.includes("games"))
+  {
+    console.log("games found");
+    updates = {
+      games: req.body.games
+    }
+  }
+  else
+  {
+    console.log("Other");
+  }
+  updateUser(req.body.userId, updates)
     .then( function(updateQueryResponse) {
       res
         .status(updateQueryResponse.statusCode)
@@ -122,6 +137,20 @@ app.put("/updateUser", function(req, res, next){
         .send(errormsg.msg)
     });
 });
+
+app.get("/getAllUsers", function(req, res, next){
+  getAllUsers()
+  .then( function(updateQueryResponse) {
+    res
+      .status(updateQueryResponse.statusCode)
+      .json(updateQueryResponse.users);
+  })
+  .catch( function(errormsg) {
+    res
+      .status(errormsg.statusCode)
+      .json(errormsg.msg)
+  });
+})
 
 app.listen(3001, () => {
     console.log("Server is running in port: 3001");

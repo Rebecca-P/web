@@ -14,6 +14,8 @@ function updateUser(userId, updates) {
           msg: "No user is associated to the indicated id"
         });
       } else {
+        console.log("----------------------------------------------------------");
+        console.log(updates);
         User.findOneAndUpdate({ _id: userId }, updates, err => {
           if (err) {
             reject({

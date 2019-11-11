@@ -68,8 +68,17 @@ async updateUserGames(updatedGames, user_id)
         games: [ ...this.state.games , { url_image:resultat.image , name_game:resultat.name, hour_game:0, tags:resultat.tag }],
       }, () => {
         console.log(this.state.games);
-        //console.log(resultat);
-        this.updateUserGames(this.state.games, this.props.user._id);
+        let final_game = [];
+        this.state.games.forEach(function(element) {
+        final_game.push({
+          tags: element.tags,
+          name : element.name_game,
+          urlImage : element.url_image,
+          playTime : element.hour_game,
+        })
+      });
+
+      this.updateUserGames(final_game, this.props.user._id);
 
       });
 
@@ -82,7 +91,20 @@ async updateUserGames(updatedGames, user_id)
     let games = [...this.state.games];
     let index = games.findIndex(game => game.name_game === name);
     games[index] = {...games[index], hour_game: games[index].hour_game+1};
-    this.setState({ games }); 
+    this.setState({ games },
+      () => {
+        let final_game = [];
+        this.state.games.forEach(function(element) {
+        final_game.push({
+          tags: element.tags,
+          name : element.name_game,
+          urlImage : element.url_image,
+          playTime : element.hour_game,
+        })
+      });
+      this.updateUserGames(final_game, this.props.user._id);
+      }
+    ); 
   }
 
   handleStat(game_)
@@ -116,9 +138,8 @@ async updateUserGames(updatedGames, user_id)
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
   
   handleLog(){
-    
-    this.props.func_co(false);
     compteur=0;
+    this.props.func_co(false);
   }
   
   render(){
@@ -194,12 +215,12 @@ async updateUserGames(updatedGames, user_id)
             onClick={this.handleItemClick}
           />
           <Menu.Item
-            name='Market'
+            name='market'
             active={activeItem === 'Market'}
             onClick={this.handleItemClick}
           />
           <Menu.Item
-            name='Communaute'
+            name='communaute'
             active={activeItem === 'communaute'}
             onClick={this.handleItemClick}
           />

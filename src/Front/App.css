@@ -116,6 +116,13 @@ html, body {
   height: 40vh;
 }
 
+#commu_item{
+  padding: 0.5vh;
+  margin: 2vh;
+  width: 15vw;
+  height: 50vh;
+}
+
 #graphic{
   align-content: center;
   text-align: center;
@@ -150,4 +157,22 @@ span.psw {
 	color: white;
 	
 }
+@media screen and (max-width: 780px)
+{
+  
+#Body_1 {
+	font-family: Arial, Helvetica, sans-serif;
+  background:url("./background/back2.png"),url("./background/back3.png"), radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+  background-attachment : scroll ;
+  
+}
 
+#Body_2 {
+	font-family: Arial, Helvetica, sans-serif;
+  background:url("./background/Line.png"), radial-gradient(ellipse at bottom, #5de4e9 0%, #3753d3 100%);
+  background-attachment : scroll ;
+  
+
+  
+} 
+}

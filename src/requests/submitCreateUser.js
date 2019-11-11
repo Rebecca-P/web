@@ -1,12 +1,11 @@
 const fetch = require('node-fetch');
 
-function submitCreateUser(username, acc_address, acc_password, acc_urlimage)
+function submitCreateUser(username, acc_address, acc_password)
 {   
     const toSend = {
         userName: username,
         address: acc_address,
-        password: acc_password,
-        urlImage: acc_urlimage,
+        password: acc_password
     };
 
     console.log(toSend);

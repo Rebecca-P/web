@@ -11,8 +11,9 @@ const Friend = require("./models/friend")
 const Profile = require("./models/profile")
 
 function randomNumber(max) {
+    
     return Math.floor(Math.random() * (max )) ;
-}
+  }
 function nextChar(c, i) {
     return String.fromCharCode(c.charCodeAt(0) + i);
 }

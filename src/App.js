@@ -3,7 +3,7 @@ import { Button  } from 'semantic-ui-react'
 import './Front/App.css';
 import LogIn from './Front/LogIn'
 import Profil from './Front/Profil'
-//import User_data from './Front/User_data';
+import User_data from './Front/User_data';
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,7 +11,7 @@ import {
   Redirect,
 
 } from "react-router-dom";
-//import { thisExpression } from '@babel/types';
+import { thisExpression } from '@babel/types';
 /**
  * Ajouter un bouton pour supprimer le compte
  */
@@ -42,6 +42,12 @@ class App extends Component {
 
   handleLog(evt){
     this.setState({identifer : evt});   
+    if(evt === false)
+    {
+      this.setState({
+        user: null,
+      })
+    }
   }
 
   handleUser(evt){//ca marche
@@ -98,12 +104,6 @@ class App extends Component {
           
           
         </div>
-
-        {/* <div id={toggleBack}>
-          {button}
-            <Profil/>
-        </div> */}
-
       </Router>
       
     );

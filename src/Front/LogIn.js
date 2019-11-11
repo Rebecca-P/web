@@ -79,7 +79,7 @@ class LogIn extends Component {
       return response.json()
     }) 
     .then( function (data){
-      console.log(data);
+      //console.log(data);
       if(typeof data !== 'string') 
       {
         test = data;      
