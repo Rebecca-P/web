@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {  Image , Grid , Segment , Header  ,  Card ,  Modal} from 'semantic-ui-react'
+import {  Image , Grid , Segment , Header  ,  Card ,  Modal,Responsive} from 'semantic-ui-react'
 
 export default function FriendLister(props)
 {
@@ -24,7 +24,7 @@ export default function FriendLister(props)
   }
 
   ///Sinon
-  const friend_content = props.friends.map((friend) =>
+  const friend_content = props.friends.map((friend) =>//mode colonne
   <Grid.Column width={4} >
     <Card id='card_item'>
       <Image  src={friend.urlImage} />
@@ -35,64 +35,36 @@ export default function FriendLister(props)
   </Grid.Column>
   );
 
+  const friend2_content = props.friends.map((friend) =>//mode 1 par ligne
+    <Card id='card_item2'>
+      <Image  size='tiny' src={friend.urlImage} />
+      <Card.Content>
+        <Card.Header> {friend.userName} </Card.Header>
+      </Card.Content>
+    </Card>
+  );
 
-    if(props.friends.length > 4)
-    {
-      const mini_content = props.friends.slice(0,4);
-      const mini_friend_content = mini_content.map((friend) =>
-      
-        <Card id='card_item'> 
-          <Image  src={friend.urlImage} />
-          <Card.Content>
-            <Card.Header> {friend.userName} </Card.Header>
-          </Card.Content>
-        </Card>
-      
-      );
-  
-      return(
-        <Segment >
-          <Header as='h2'>
-            Player Friends
-          </Header>
-          <Card.Group itemsPerRow={4}>     
-            {mini_friend_content}
-          </Card.Group>
-  
-          <Modal 
-            trigger={
-                <Card fluid color='red'>                  
-                  <Card.Content>
-                    <Card.Header> See All </Card.Header>
-                  </Card.Content>
-                </Card>
-            }
-            closeIcon
-            basic
-            
-            >
-          <Modal.Content>
-          <Header as='h2' textAlign='center'>
-              Player Friends
-            </Header>
-            <Card.Group centered textAlign='center' itemsPerRow={3} >   
-              {friend_content}
-            </Card.Group>
-          </Modal.Content>
-          </Modal>
-        </Segment>
-      );
-      
-    }
     
     return(
-      <Segment >
+      <Segment>
         <Header as='h2'>
           Player Friends
         </Header>
-        <Card.Group itemsPerRow={4}>     
-          {friend_content}
-        </Card.Group>
+        
+          <Responsive minWidth={830}>
+            <Card.Group itemsPerRow={4}>     
+              {friend_content}
+            </Card.Group>
+          </Responsive>
+        <div id="friends">
+          <Responsive maxWidth={829}>
+            <Card.Group stackable >     
+                {friend2_content}
+              </Card.Group>
+          </Responsive>
+        </div>
+        
+        
       </Segment> 
     );
 }

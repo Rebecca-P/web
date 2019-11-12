@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button , Image , Segment , Header  , List ,  Modal,Icon} from 'semantic-ui-react'
+import { Button , Image , Segment , Header  , List ,  Modal,Icon,Responsive} from 'semantic-ui-react'
 
 function addAHour(gameName,addHour)
 {
@@ -34,7 +34,7 @@ export default function GameLister(props)
   //tout les jeux;
   const game_content = props.games.map((game) =>
   <List.Item>    
-      <Image avatar size='small' src={game.url_image} />
+      <Image  size='small' src={game.url_image} />
       <List.Content verticalAlign='middle'>
         <List.Header>
           {game.name_game}
@@ -51,12 +51,12 @@ export default function GameLister(props)
   );
 
   //mode nombres jeux superieur à 4
-  if(props.games.length > 4)
+  if(props.games.length > 2)
   {
-    const mini_content = props.games.slice(0,4);
+    const mini_content = props.games.slice(0,2);
     const mini_game_content = mini_content.map((game) =>
       <List.Item>    
-          <Image avatar size='small' src={game.url_image} />
+          <Image  size='small' src={game.url_image} />
           <List.Content verticalAlign='middle'>
             <List.Header>
               {game.name_game}
@@ -77,24 +77,44 @@ export default function GameLister(props)
         <Header as='h2'>
           My Games 
         </Header>
-        <List divided relaxed='very' animated verticalAlign='middle' size='large'>     
+        <Responsive minWidth={830}>
+          <List divided relaxed='very' animated verticalAlign='middle' size='small'>     
+            {mini_game_content}
+          </List>
+            <Modal 
+            trigger={<Button size='large' fluid >See All</Button>}
+            size='large'
+            dimmer='blurring'
+            >
+            <Modal.Content>
+              <Header as='h2'>
+                My Games 
+              </Header>
+              <List divided relaxed='very' animated verticalAlign='middle' size='small'>     
+                {game_content}
+              </List>
+            </Modal.Content>
+          </Modal>
+        </Responsive>
+        <Responsive maxWidth={829}>
+        <List divided relaxed='very' animated verticalAlign='middle' size='tiny'>     
           {mini_game_content}
         </List>
-
-        <Modal 
-          trigger={<Button size='large' fluid >See All</Button>}
-          size='large'
-          dimmer='blurring'
-        >
-          <Modal.Content>
-            <Header as='h2'>
-              My Games 
-            </Header>
-            <List divided relaxed='very' animated verticalAlign='middle' size='large'>     
-              {game_content}
-            </List>
-          </Modal.Content>
-        </Modal>
+          <Modal 
+            trigger={<Button size='large' fluid >See All</Button>}
+            size='tiny'
+            dimmer='blurring'
+          >
+            <Modal.Content>
+              <Header as='h2'>
+                My Games 
+              </Header>
+              <List divided relaxed='very' animated verticalAlign='middle' size='small'>     
+                {game_content}
+              </List>
+            </Modal.Content>
+          </Modal>
+        </Responsive>
       </Segment>
       );
     }
@@ -104,9 +124,17 @@ export default function GameLister(props)
       <Header as='h2'>
         My Games 
       </Header>
-      <List divided relaxed='very' animated verticalAlign='middle' size='large'>     
+      <Responsive minWidth={830}>
+        <List divided relaxed='very' animated verticalAlign='middle' size='small'>     
+          {game_content}
+        </List>
+      </Responsive>
+      <Responsive maxWidth={829}>
+      <List divided relaxed='very' animated verticalAlign='middle' size='tiny'>     
         {game_content}
       </List>
+      </Responsive>
+      
     </Segment>
   );
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, Confirm,Button  } from 'semantic-ui-react'
+import { Menu, Responsive,Dropdown  } from 'semantic-ui-react'
 import './App.css';
 import AllStat from'./Component/AllStat'
 import Graphic_Game from './Component/Graphic_Game'
@@ -193,61 +193,112 @@ async updateUserGames(updatedGames, user_id)
     
     return(
       <div id='profil' key={key_}>
-        <Menu pointing secondary>
-          <Menu.Item
-            name='home'
-            active={activeItem === 'home'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name='game'
-            active={activeItem === 'game'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name='stat'
-            active={activeItem === 'stat'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name='friends'
-            active={activeItem === 'friends'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name='market'
-            active={activeItem === 'Market'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name='communaute'
-            active={activeItem === 'communaute'}
-            onClick={this.handleItemClick}
-          />
-          
-          <Menu.Menu position='right'>
-            <Menu.Item>
+        <Responsive minWidth={830}> {/* Menu Responsive */}
+          <Menu pointing secondary>
+            <Menu.Item
+              name='home'
+              active={activeItem === 'home'}
+              onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name='game'
+              active={activeItem === 'game'}
+              onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name='stat'
+              active={activeItem === 'stat'}
+              onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name='friends'
+              active={activeItem === 'friends'}
+              onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name='market'
+              active={activeItem === 'Market'}
+              onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name='communaute'
+              active={activeItem === 'communaute'}
+              onClick={this.handleItemClick}
+            />
+            
+            <Menu.Menu position='right'>
+              <Menu.Item>
+                <AuthButton deco={this.handleLog} ></AuthButton>
+              </Menu.Item>
+              <Menu.Item >
+                <DeleteButton deco={this.handleLog} userId={key_}></DeleteButton>
+              </Menu.Item>
+            </Menu.Menu>
+          </Menu>
+        </Responsive>
+        <Responsive maxWidth={829}> {/* Menu Responsive */}
+        <Dropdown text='Menu' floating labeled button >
+          <Dropdown.Menu>
+            <Dropdown.Item
+              text="Home" 
+              name='home'
+              active={activeItem === 'home'}
+              onClick={this.handleItemClick}            
+            />
+            <Dropdown.Item
+              text="Game" 
+              name='game'
+              active={activeItem === 'game'}
+              onClick={this.handleItemClick}           
+            />
+            <Dropdown.Item
+              text="Stat" 
+              name='stat'
+              active={activeItem === 'stat'}
+              onClick={this.handleItemClick}           
+            />
+            <Dropdown.Item
+              text="Friends" 
+              name='friends'
+              active={activeItem === 'friends'}
+              onClick={this.handleItemClick}            
+            />
+            <Dropdown.Item
+              text="Market" 
+              name='market'
+              active={activeItem === 'market'}
+              onClick={this.handleItemClick}            
+            />
+            <Dropdown.Item
+              text="Communaute" 
+              name='communaute'
+              active={activeItem === 'communaute'}
+              onClick={this.handleItemClick}            
+            />
+            <Dropdown.Item>
               <AuthButton deco={this.handleLog} ></AuthButton>
-            </Menu.Item>
-            <Menu.Item >
+            </Dropdown.Item>
+            <Dropdown.Item>
               <DeleteButton deco={this.handleLog} userId={key_}></DeleteButton>
-            </Menu.Item>
-          </Menu.Menu>
-        </Menu>
+            </Dropdown.Item>
+            
+          </Dropdown.Menu>
+        </Dropdown>
+        </Responsive>
         {
           activeItem ==='home' ?(
-          <div>
+          <div> {/* DONNE PERSO. DE L'UTILISATEUR */}
             <AllStat pictureUser={image_} nameUser={name_} level={level_} xp={xp_}></AllStat> 
             <br></br>
             <br></br>
             <StatUser numberGame={nb_game} hourAll={hour} ></StatUser>
           </div>
           ) : (
-            activeItem ==='game' ?
+            activeItem ==='game' ?//Listes de Jeu
               <GameLister games={games_} addHour={this.handleAddHour}></GameLister>
             :  
             activeItem ==='stat' ?//Graphique
-              <Graphic_Game options={{Color, labels}} series={series} labels={labels}/>
+              <Graphic_Game options={{Color, labels, legend: {position: 'top'}}} series={series} labels={labels}/>
             :
             activeItem ==='friends' ?
               <FriendLister friends={friends}></FriendLister>

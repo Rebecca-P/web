@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {  Image , Grid , Card, Button, Icon} from 'semantic-ui-react'
+import {  Image , Grid , Card, Button, Icon,Responsive} from 'semantic-ui-react'
 import '../App.css';
 
 
@@ -43,16 +43,39 @@ export default function Communaute_List(props)
     </Card>
   </Grid.Column>
   );
+  let communaute_content2 = props.friends.map((friend) =>
+  <Grid.Column width={1} >
+    <Card>
+      <Image  src={friend.urlImage} />
+      <Card.Content>
+        <Card.Header> {friend.userName} </Card.Header>
+      </Card.Content>
+      <Card.Content extra>
+        <Button icon onClick={() => 
+          alert("Demande envoyé!")
+        } 
+        >
+          <Icon name='plus' />
+        </Button>
+      </Card.Content>
+    </Card>
+  </Grid.Column>
+  );
 
 
   return(
-    <Card.Group itemsPerRow={4} id='game_list'>     
-      {communaute_content}
-    </Card.Group>
+    <div>
+      <Responsive minWidth={830}>
+        <Card.Group itemsPerRow={4} id='game_list'>     
+          {communaute_content}
+        </Card.Group>
+      </Responsive>
+      <Responsive maxWidth={829}>
+      <Card.Group itemsPerRow={1} id='game_list'>     
+          {communaute_content2}
+        </Card.Group>
+      </Responsive>
+    </div>
+    
     );
-}
-
-function disabled_commu()
-{
-  index_commu = true;
 }

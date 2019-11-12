@@ -94,7 +94,9 @@ html, body {
   border-radius: 1vw; 
   overflow: auto; 
 }
-
+#friends{
+  overflow: auto;
+}
 #game_list{
   padding: 0.5vh;
   margin: auto;  
@@ -115,7 +117,12 @@ html, body {
   width: 15vw;
   height: 40vh;
 }
-
+#card_item2{
+  padding: 0.5vh;
+  margin: 2vh;
+  width: 0.6vw;
+  height: 1vh;
+}
 #commu_item{
   padding: 0.5vh;
   margin: 2vh;
@@ -123,10 +130,7 @@ html, body {
   height: 50vh;
 }
 
-#graphic{
-  align-content: center;
-  text-align: center;
-}
+
 
 #picture{
   align-self: center;
@@ -156,23 +160,4 @@ span.psw {
 	padding: 0.3vw;
 	color: white;
 	
-}
-@media screen and (max-width: 780px)
-{
-  
-#Body_1 {
-	font-family: Arial, Helvetica, sans-serif;
-  background:url("./background/back2.png"),url("./background/back3.png"), radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
-  background-attachment : scroll ;
-  
-}
-
-#Body_2 {
-	font-family: Arial, Helvetica, sans-serif;
-  background:url("./background/Line.png"), radial-gradient(ellipse at bottom, #5de4e9 0%, #3753d3 100%);
-  background-attachment : scroll ;
-  
-
-  
-} 
 }

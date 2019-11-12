@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Button , Icon , Statistic , Image , Grid , Segment , Header  , List , Progress , Card , Menu , Modal} from 'semantic-ui-react'
+import { Header } from 'semantic-ui-react'
 
 
 export default function NameUser({nameUser}) {
   return(
-    <Header size='huge'>
+    <Header size='huge' textAlign='center'>
       {nameUser}
     </Header>
   );
